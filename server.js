@@ -12,13 +12,20 @@ app.listen(3000, function (){});
 
 //Connexion to the server
 MongoClient.connect(url, function (err, db) {
+
+  var User = db.collection('User');
+
     if (err) {
         console.log('Unable to connect to the mongoDB server. Error:', err);
     } else { //Début else
         console.log('Connection established to', url);
     }
 
-    app.get('/', function(req, res) {
-        res.send('done');
+    app.get('/getUsers', function(req, res) {
+      User.find().toArray(function (err, results) {
+             var collection = {results: results};
+             res.writeHead(200, {"Content-Type": "application/json"});
+             res.end(JSON.stringify(collection));
+         });
     });
 });
