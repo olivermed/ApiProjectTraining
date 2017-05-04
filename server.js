@@ -32,7 +32,6 @@ apiRoutes.use(function(req, res, next) {
           next();
         }
       });
-
     } else {
       return res.status(403).send({
         success: false,
@@ -61,25 +60,22 @@ MongoClient.connect(url, function (err, db) {
 
   apiRoutes.get('/getUser/:id', function(req, res) {
     var o_id = new mongodb.ObjectID(req.params.id);
-    User.findOne({_id: o_id}, function(err, document) {
-        //console.log(JSON.stringify(document));
-        res.writeHead(200, {"Content-Type": "application/json"});
-        res.end(JSON.stringify({result: document}));
-    });
-    //dbMF.getCollection(User, res);
+    dbMF.getOneCollection(req, res, User, o_id);
   });
 
   app.post('/addUser', function(req, res) {
     dbMF.saveDocument(req, res, User);
   });
 
-  apiRoutes.get('/getUser', function(){
+  apiRoutes.get('/getUser', function(req, res){
     dbMF.getCollection(User, res);
   });
 
+  //Add friends, update user
+
   app.post('/login', function(req, res) {
     User.findOne({
-      name: req.body.login
+      name: req.body.Login
     }, function(err, user) {
       if (err) throw err;
 
