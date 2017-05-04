@@ -67,17 +67,36 @@ MongoClient.connect(url, function (err, db) {
     dbMF.saveDocument(req, res, User);
   });
 
-  apiRoutes.get('/getUser', function(req, res){
+  apiRoutes.get('/getUsers', function(req, res){
     dbMF.getCollection(User, res);
   });
 
-  //Add friends, update user
+  //Add friends, update user, get user by login
+
+  //Add gcm to user
+  apiRoutes.post('/addGcmId/:id/:idGcm', function(request, result) {
+    var o_id = new mongodb.ObjectID(request.params.id);
+    User.findOne({_id: o_id }, function(req, res) {
+      if (res.idGcm == undefined) {
+        User.update({_id: o_id}, {
+          $set: {idGcm: request.params.idGcm},
+          $currentDate: { lastModified: true }
+        });
+        result.json({ message: 'ok' });
+      } else {
+        result.json({ message: 'User is already set' });
+      }
+    });
+  });
 
   app.post('/login', function(req, res) {
+    console.log(req.body);
     User.findOne({
-      name: req.body.Login
+      Login: req.body.Login
     }, function(err, user) {
       if (err) throw err;
+
+      console.log("User :: ", user);
 
       if (!user) {
         res.status(400).json({ success: false, message: 'Authentication failed. User not found.' });
