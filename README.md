@@ -9,6 +9,8 @@ $ ./node_modules/nodemon/bin/nodemon.js server.js
 
 ## **Route**
 
+Route origin : http://localhost:3000/
+
 Add User
 Parameters: FirstName, Surname, Surname
 ```
