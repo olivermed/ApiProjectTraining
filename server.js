@@ -60,7 +60,7 @@ MongoClient.connect(url, function (err, db) {
 
   apiRoutes.get('/getUser/:id', function(req, res) {
     var o_id = new mongodb.ObjectID(req.params.id);
-    dbMF.getOneCollection(req, res, User, o_id);
+    dbMF.getOneCollection(req, res, User, {_id: o_id});
   });
 
   app.post('/addUser', function(req, res) {
@@ -69,6 +69,10 @@ MongoClient.connect(url, function (err, db) {
 
   apiRoutes.get('/getUsers', function(req, res){
     dbMF.getCollection(User, res);
+  });
+
+  apiRoutes.get('/getUserByLogin/:login', function(req, res){
+    dbMF.getOneCollection(req, res, User, {Login: req.params.login});
   });
 
   //Add friends, update user, get user by login

@@ -56,8 +56,8 @@ exports.saveDocument = function(req, res, Collection) {
 }
 
 //Db getone collection
-exports.getOneCollection = function(req, res, Collection, id) {
-  Collection.findOne({_id: id}, function(err, document) {
+exports.getOneCollection = function(req, res, Collection, obj) {
+  Collection.findOne(obj, function(err, document) {
     res.writeHead(200, {"Content-Type": "application/json"});
     res.end(JSON.stringify({result: document}));
   });
