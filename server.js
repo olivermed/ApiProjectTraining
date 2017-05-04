@@ -41,10 +41,6 @@ apiRoutes.use(function(req, res, next) {
     }
   });
 
-  apiRoutes.post('/test', function(req, res) {
-    writeResultJson(res, "ok");
-  });
-
   apiRoutes.get('/test', function(req, res) {
     res.writeHead(200, {"Content-Type": "application/json"});
     res.end(JSON.stringify("ok"));
@@ -63,12 +59,22 @@ MongoClient.connect(url, function (err, db) {
     console.log('Connection established to', url);
   }
 
-  app.get('/getUsers', function(req, res) {
-    dbMF.getCollection(User, res);
+  apiRoutes.get('/getUser/:id', function(req, res) {
+    var o_id = new mongodb.ObjectID(req.params.id);
+    User.findOne({_id: o_id}, function(err, document) {
+        //console.log(JSON.stringify(document));
+        res.writeHead(200, {"Content-Type": "application/json"});
+        res.end(JSON.stringify({result: document}));
+    });
+    //dbMF.getCollection(User, res);
   });
 
   app.post('/addUser', function(req, res) {
     dbMF.saveDocument(req, res, User);
+  });
+
+  apiRoutes.get('/getUser', function(){
+    dbMF.getCollection(User, res);
   });
 
   app.post('/login', function(req, res) {

@@ -25,4 +25,13 @@ POST /login {"Login":"OlivierMedec", "Password":"azerty"}
 > **HTTP/1.1 200 OK** {"token": "RfGte4g3"}
 
 > **HTTP/1.1 400 Bad Request** {"message": "Authentication failed. Wrong password."}
+
 > **HTTP/1.1 400 Bad Request** {"message": "Authentication failed. User not found."}
+
+Get user
+```
+Get /login {"id":"1", "token":"token"}
+```
+> **HTTP/1.1 200 OK** {"result":{"_id":"5909a3530c12fed028f8ea8f","FirstName":"Olivier","Surname":"Medec","Login":"OlivierMedec","Password": "azerty"}}
+
+> **HTTP/1.1 400 Bad Request** {"message": "Authentication failed. Wrong password."}
