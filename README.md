@@ -18,7 +18,10 @@ Parameters: FirstName, Surname, Login, Password, token
 ```
 POST /addUser {"FirstName":"Olivier", "Surname":"Medec", "Login":"OlivierMedec", "Password":"azerty", "token": "token"}
 ```
-> **HTTP/1.1 200 OK** ```json {"results": {"ok": 1, "n": 1}}```
+> **HTTP/1.1 200 OK**
+```json 
+{"results": {"ok": 1, "n": 1}}
+```
 
 Log user
 Parameters: Login, Password
