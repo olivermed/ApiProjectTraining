@@ -1,4 +1,12 @@
 #Project Training Final Assignment
+
+### Launch your local instance
+
+> On MacOS or Linux
+```
+$ ./node_modules/nodemon/bin/nodemon.js server.js
+```
+
 ## **Route**
 
 Add User
