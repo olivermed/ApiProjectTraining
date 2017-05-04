@@ -54,7 +54,7 @@ get user information by login
 Parameters: id, token
 
 ```
-GET /user {"Login":"OlivierMedec", "token":"token"}
+GET /getUserByLogin/:login {"Login":"OlivierMedec", "token":"token"}
 ```
 > **HTTP/1.1 200 OK** {"result":{"_id":"5909a3530c12fed028f8ea8f","FirstName":"Olivier","Surname":"Medec","Login":"OlivierMedec","Password": "azerty"}}
 
