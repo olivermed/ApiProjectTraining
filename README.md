@@ -4,6 +4,7 @@
 
 > On MacOS or Linux
 ```
+$ npm install
 $ ./node_modules/nodemon/bin/nodemon.js server.js
 ```
 
