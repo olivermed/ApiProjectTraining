@@ -1,6 +1,5 @@
 module.exports = {
 
-    'secret': 'ilovescotchyscotch',
+    'key': 'jesuislaclesecret',
     'database': 'mongodb://localhost:27017/ProjectTrainingDataBase'
-
 };
