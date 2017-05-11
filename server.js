@@ -13,7 +13,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 var MongoClient = mongodb.MongoClient;
 
 // Connection URL
-var url = 'mongodb://localhost:27017/ProjectTrainingDataBase';
+var url = "mongodb://OlivierMedec:123456789@ds163677.mlab.com:63677/ProjectTrainingDataBase";
+//var url = 'mongodb://localhost:27017/ProjectTrainingDataBase';
 app.listen(3000, function (){});
 
 var apiRoutes = express.Router();
