@@ -81,15 +81,11 @@ MongoClient.connect(url, function (err, db) {
     apiRoutes.post('/addGcmId/:id/:idGcm', function(request, result) {
         var o_id = new mongodb.ObjectID(request.params.id);
         User.findOne({_id: o_id }, function(req, res) {
-            if (res.idGcm == undefined) {
-                User.update({_id: o_id}, {
-                    $set: {idGcm: request.params.idGcm},
-                    $currentDate: { lastModified: true }
-                });
-                result.json({ message: 'ok' });
-            } else {
-                result.json({ message: 'User is already set' });
-            }
+            User.update({_id: o_id}, {
+                $set: {idGcm: request.params.idGcm},
+                $currentDate: { lastModified: true }
+            });
+            result.json({ message: 'ok' });
         });
     });
 
@@ -121,7 +117,8 @@ MongoClient.connect(url, function (err, db) {
                     res.json({
                         success: true,
                         message: 'Connected',
-                        token: token
+                        token: token,
+                        _id: user._id
                     });
                 }
             }
