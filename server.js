@@ -13,10 +13,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 var MongoClient = mongodb.MongoClient;
 
 // Connection URL
-var url = "mongodb://OlivierMedec:123456789@ds137891.mlab.com:37891/projecttrainingdatabase";
-//var url = 'mongodb://localhost:27017/ProjectTrainingDataBase';
-//app.listen(3000, function (){});
-app.listen(process.env.PORT, function() {});
+//var url = "mongodb://OlivierMedec:123456789@ds137891.mlab.com:37891/projecttrainingdatabase";
+var url = 'mongodb://localhost:27017/ProjectTrainingDataBase';
+app.listen(3000, function (){});
+//app.listen(process.env.PORT, function() {});
 
 var apiRoutes = express.Router();
 
@@ -80,11 +80,11 @@ MongoClient.connect(url, function (err, db) {
     //Add friends, update user, get user by login
 
     //Add gcm to user
-    apiRoutes.post('/addGcmId/:id/:idGcm', function(request, result) {
+    apiRoutes.post('/addFcmId/:id/:idFcm', function(request, result) {
         var o_id = new mongodb.ObjectID(request.params.id);
         User.findOne({_id: o_id }, function(req, res) {
             User.update({_id: o_id}, {
-                $set: {idGcm: request.params.idGcm},
+                $set: {idFcm: request.params.idFcm},
                 $currentDate: { lastModified: true }
             });
             result.json({ message: 'ok' });
