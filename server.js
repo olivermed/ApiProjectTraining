@@ -53,6 +53,7 @@ app.use('/api', apiRoutes);
 MongoClient.connect(url, function (err, db) {
 
     var User = db.collection('User');
+    var Friends = db.collection('Friends');
 
     if (err) {
         console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -75,6 +76,53 @@ MongoClient.connect(url, function (err, db) {
 
     apiRoutes.get('/getUserByLogin/:login', function(req, res){
         dbMF.getOneCollection(req, res, User, {Login: req.params.login});
+    });
+
+    apiRoutes.post('/addFriend', function(req, res) {
+        dbMF.saveDocument(req, res, Friends);
+    });
+
+    apiRoutes.get('/getFriends/:id', function(req, res) {
+        var o_id = new mongodb.ObjectID(req.params.id);
+        Friends.aggregate([
+            {
+                $lookup:
+                {
+                    from: "User",
+                    localField: "idFriend",
+                    foreignField: "_id",
+                    as: "friend"
+                }
+            },
+            {
+                $match:
+                {
+                    id: o_id
+                }
+            },
+            {
+                $project :
+                {
+                    friend: 1
+                }
+            },
+            { $unwind : "$friend" }
+        ], function(req, result) {
+            var collection = {results: result};
+            res.writeHead(200, {"Content-Type": "application/json"});
+            res.end(JSON.stringify(collection));
+        });
+    });
+
+
+    apiRoutes.get('/searchFriends/:friend', function(req, res) {
+        var friend = req.params.friend;
+        User.find({ $text: { $search: friend }}).toArray(
+            function (err, results) {
+                var collection = {results: results};
+                res.writeHead(200, {"Content-Type": "application/json"});
+                res.end(JSON.stringify(collection));
+            });
     });
 
     //Add friends, update user, get user by login
