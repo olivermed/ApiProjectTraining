@@ -71,7 +71,12 @@ MongoClient.connect(url, function (err, db) {
     });
 
     apiRoutes.get('/getUsers', function(req, res){
-        dbMF.getCollection(User, res);
+        //dbMF.getCollection(User, res);
+        User.find({}).sort( { FirstName: 1 } ).toArray(function (err, results) {
+            var collection = {results: results};
+            res.writeHead(200, {"Content-Type": "application/json"});
+            res.end(JSON.stringify(collection));
+        });
     });
 
     apiRoutes.get('/getUserByLogin/:login', function(req, res){
